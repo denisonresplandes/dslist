@@ -35,7 +35,7 @@ public class Game implements Serializable {
 	private Long id;
 	private String title;
 	
-	@Column(name = "_year")
+	@Column(name = "game_year")
 	private Year year;
 	private String genre;
 	private String platforms;
