@@ -34,7 +34,8 @@ public class GameController {
 					.body(service.findById(id));
 		}
 		catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(e.getMessage());
 		}
 	}
 }
