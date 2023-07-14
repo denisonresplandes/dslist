@@ -24,7 +24,6 @@ public class BelongingPK {
 	/*
 	 * foreign keys for Game and Game List entities.
 	 * */
-
 	@ManyToOne
 	@JoinColumn(name = "game_id")
 	@EqualsAndHashCode.Include
