@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devsuperior.dslist.dto.GameDTO;
 import com.devsuperior.dslist.dto.GameMinDTO;
 import com.devsuperior.dslist.entities.Game;
+import com.devsuperior.dslist.exceptions.ResourceNotFoundException;
 import com.devsuperior.dslist.repositories.GameRepository;
 
 @Service
@@ -28,17 +29,17 @@ public class GameService {
 	@Transactional(readOnly = true)
 	public GameDTO findById(Long id) {
 		Game game = repository.findById(id)
-			.orElseThrow(() -> new RuntimeException("Game not found!"));
+			.orElseThrow(() -> new ResourceNotFoundException("Game not found!"));
 		return new GameDTO(game);
 	}
 	
 	@Transactional(readOnly = true)
-	public List<GameMinDTO> searchByList(Long listId) {
+	public List<GameMinDTO> findByList(Long listId) {
 		List<GameMinDTO> list = repository.searchByList(listId).stream()
 			.map(GameMinDTO::new).toList();
 		if (!list.isEmpty())
 			return list;
 		else 
-			throw new RuntimeException("Game List not found!");
+			throw new ResourceNotFoundException("Game List not found!");
 	}
 }
