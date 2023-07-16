@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dslist.dto.GameListDTO;
 import com.devsuperior.dslist.services.GameListService;
+import com.devsuperior.dslist.services.GameService;
 
 @RestController
 @RequestMapping("/lists")
@@ -20,6 +21,9 @@ public class GameListController {
 
 	@Autowired
 	private GameListService service;
+	
+	@Autowired
+	private GameService gameService;
 	
 	@GetMapping
 	public List<GameListDTO> findAll() {
@@ -32,6 +36,19 @@ public class GameListController {
 		try {
 			return ResponseEntity.status(HttpStatus.FOUND)
 					.body(service.findById(id));
+		}
+		catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(e.getMessage());
+		}
+	}
+	
+	@GetMapping("/{listId}/games")
+	@ResponseStatus(HttpStatus.FOUND)
+	public ResponseEntity<?> searchByList(@PathVariable Long listId) {
+		try {
+			return ResponseEntity.status(HttpStatus.FOUND)
+					.body(gameService.searchByList(listId));
 		}
 		catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
